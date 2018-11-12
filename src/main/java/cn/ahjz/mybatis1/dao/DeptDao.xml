@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--mapper的namespace可以随便取-->
+<!--若是Mapper动态代理 namespace与接口类路径一致-->
+
+<mapper namespace="cn.ahjz.mybatis1.dao.DeptDao">
+    <!--一级缓存默认开启即为 session缓存-->
+
+    <!--开启二级缓存-->
+    <cache/>
+    <!--id resultMap唯一标识  type result最后返回类型 autoMapping开启自动映射-->
+    <!--id 数据库列名 property属性名-->
+    <resultMap id="Dept" type="deptMap" autoMapping="true">
+        <id column="deptId" property="deptId"/>
+        <result column="deptName" property="deptName"/>
+    </resultMap>
+
+    <!--id 是此statement的唯一标识  resulttype 插入参数类型-->
+    <!--若是动态代理 id与方法名保持一致-->
+    <!--mapper接口中方法返回来类型必须和resultType一致-->
+
+    <!--#() 占位符 $()字符串拼接-->
+
+    <select id="selectDept" resultType="Dept">
+		SELECT * FROM t_dept WHERE deptId=#{id}
+	</select>
+
+    <select id="queryAll" resultType="Dept">
+		SELECT * FROM ${tableName}
+	</select>
+
+    <!--多个参数 接口中使用param-->
+    <select id="login" resultType="Dept">
+		SELECT * FROM t_dept where name=#{name} AND password=#{password}
+	</select>
+</mapper>                      
